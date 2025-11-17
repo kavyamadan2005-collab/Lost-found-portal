@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+torch
+torchvision
+numpy
+Pillow
+ultralytics
+python-multipart
