@@ -1,7 +1,7 @@
 import os
 from pydantic import BaseSettings
 
-
+# Force rebuild
 class Settings(BaseSettings):
     app_name: str = "Lost & Found Portal API"
     database_url: str = os.getenv("DATABASE_URL", "postgresql://user:password@localhost/lost_found_portal")
