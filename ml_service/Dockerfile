@@ -2,9 +2,11 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies (if needed by some Python packages)
+# Install system dependencies required by some Python packages (OpenCV, etc.)
 RUN apt-get update && apt-get install -y \
     gcc \
+    libgl1 \
+    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements
