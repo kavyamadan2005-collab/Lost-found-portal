@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y \
     gcc \
     && rm -rf /var/lib/apt/lists/*
 
+# Force cache invalidation
+RUN echo "PostgreSQL build $(date)"
+
 # Copy requirements
 COPY requirements-prod.txt .
 

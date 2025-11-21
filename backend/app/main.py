@@ -16,24 +16,25 @@ logger.info("=" * 80)
 logger.info("Starting Lost & Found Portal API initialization")
 logger.info("=" * 80)
 
-# Test database connection
-try:
-    logger.info("Testing database connection...")
-    with engine.connect() as conn:
-        logger.info("✓ Database connection successful!")
-        conn.close()
-except Exception as e:
-    logger.error(f"✗ Database connection failed: {e}")
-    raise
-
-# Create tables
-try:
-    logger.info("Creating database tables...")
-    Base.metadata.create_all(bind=engine)
-    logger.info("✓ Database tables created/verified successfully!")
-except Exception as e:
-    logger.error(f"✗ Failed to create database tables: {e}")
-    raise
+# Test database connection (non-blocking)
+if engine is not None:
+    try:
+        logger.info("Testing database connection...")
+        with engine.connect() as conn:
+            logger.info("✓ Database connection successful!")
+            conn.close()
+        
+        # Create tables
+        try:
+            logger.info("Creating database tables...")
+            Base.metadata.create_all(bind=engine)
+            logger.info("✓ Database tables created/verified successfully!")
+        except Exception as e:
+            logger.error(f"⚠ Failed to create database tables: {e}")
+    except Exception as e:
+        logger.warning(f"⚠ Database not ready yet (will retry on requests): {e}")
+else:
+    logger.warning("⚠ Database engine not initialized - will retry on first request")
 
 # Initialize FastAPI app
 app = FastAPI(title="Lost & Found Portal API")
