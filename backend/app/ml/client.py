@@ -5,10 +5,16 @@ import requests
 
 ML_BASE_URL = os.getenv("ML_SERVICE_URL", "https://affirmatory-zenaida-affectedly.ngrok-free.dev")
 
+# ngrok free tier requires this header to bypass browser warning
+NGROK_HEADERS = {
+    "ngrok-skip-browser-warning": "true",
+    "User-Agent": "FastAPI-Backend"
+}
+
 
 def extract_features(image_bytes: bytes) -> List[float]:
     files = {"image": ("image.jpg", image_bytes, "image/jpeg")}
-    resp = requests.post(f"{ML_BASE_URL}/features/extract", files=files)
+    resp = requests.post(f"{ML_BASE_URL}/features/extract", files=files, headers=NGROK_HEADERS)
     resp.raise_for_status()
     return resp.json()["vector"]
 
@@ -19,6 +25,6 @@ def compare_features(query_vector: List[float], candidate_vectors: List[List[flo
         "candidate_vectors": candidate_vectors,
         "candidate_ids": candidate_ids,
     }
-    resp = requests.post(f"{ML_BASE_URL}/features/compare", json=payload)
+    resp = requests.post(f"{ML_BASE_URL}/features/compare", json=payload, headers=NGROK_HEADERS)
     resp.raise_for_status()
     return resp.json()["results"]
