@@ -102,10 +102,10 @@ function MatchesPage() {
                 <p>
                   <strong>Found Item ID:</strong> {m.item.id}
                 </p>
-                {m.item.images && m.item.images.length > 0 && (
-                  <img
-                    src={`http://localhost:8000${m.item.images[0].image_url}`}
-                    alt={m.item.title}
+                  {m.item.images && m.item.images.length > 0 && (
+                    <img
+                      src={`${import.meta.env.VITE_API_URL}${m.item.images[0].image_url}`}
+                      alt={m.item.title}
                     style={{ maxWidth: '200px', display: 'block', marginBottom: '0.5rem' }}
                   />
                 )}

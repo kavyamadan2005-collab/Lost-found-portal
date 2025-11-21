@@ -79,7 +79,7 @@ function SearchItemsPage() {
             </h3>
             {item.images && item.images.length > 0 && (
               <img
-                src={`http://localhost:8000${item.images[0].image_url}`}
+                src={`${import.meta.env.VITE_API_URL}${item.images[0].image_url}`}
                 alt={item.title}
                 style={{ maxWidth: '200px', display: 'block', marginBottom: '0.5rem' }}
               />
