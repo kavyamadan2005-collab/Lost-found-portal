@@ -270,8 +270,8 @@ def get_matches_for_lost_item(lost_item_id: int, db: Session = Depends(get_db)):
         # Sort by score descending
         sorted_results = sorted(results, key=lambda r: r["score"], reverse=True)
 
-        # Keep only reasonably good matches (lowered threshold for demo) and limit to top 5
-        filtered = [r for r in sorted_results if r["score"] >= 0.01][:5]
+        # Show all results for demo (even if score is 0)
+        filtered = sorted_results[:5]
         logger.info(f"✓ Found {len(filtered)} matching items (scores: {[r['score'] for r in filtered]})")
         return [MatchResult(item_id=_get_result_id(r), score=r["score"]) for r in filtered]
     except Exception as e:
