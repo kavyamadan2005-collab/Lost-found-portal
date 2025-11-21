@@ -249,6 +249,7 @@ def get_matches_for_lost_item(lost_item_id: int, db: Session = Depends(get_db)):
         try:
             results = compare_features(query_vector, candidate_vectors, candidate_ids)
             logger.debug(f"ML service returned {len(results)} results")
+            logger.debug(f"Raw ML results: {results}")
         except Exception as exc:
             logger.error(f"✗ ML service error: {exc}")
             raise HTTPException(status_code=502, detail=f"ML service error: {exc}")
