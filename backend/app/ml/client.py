@@ -1,8 +1,9 @@
 from typing import List
+import os
 
 import requests
 
-ML_BASE_URL = "http://localhost:8001"
+ML_BASE_URL = os.getenv("ML_SERVICE_URL", "https://affirmatory-zenaida-affectedly.ngrok-free.dev")
 
 
 def extract_features(image_bytes: bytes) -> List[float]:
